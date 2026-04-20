@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { getLocaleFromCookie, uiText } from "@/lib/i18n";
+import LanguageSwitcher from "@/components/language-switcher";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,17 +19,30 @@ export const metadata: Metadata = {
   description: "A markdown-first technical blog",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocaleFromCookie();
+  const text = uiText[locale];
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <header className="mx-auto flex w-full max-w-3xl justify-end px-6 pt-6">
+          <LanguageSwitcher
+            locale={locale}
+            label={text.languageLabel}
+            chineseLabel={text.chinese}
+            englishLabel={text.english}
+          />
+        </header>
+        {children}
+      </body>
     </html>
   );
 }
