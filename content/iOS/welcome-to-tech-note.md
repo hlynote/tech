@@ -2,8 +2,8 @@
 title: "Welcome to Tech Note"
 date: "2026-04-20"
 summary: "第一篇示例文章，用于验证 Markdown 博客渲染链路。"
-category: "xxx"
-slug: "welcome-to-tech-note"
+category: "iOS"
+slug: "welcome-to-tech-note-ios"
 tags:
   - nextjs
   - markdown
