@@ -3,7 +3,7 @@ import path from "node:path";
 import matter from "gray-matter";
 
 export const DEFAULT_CATEGORY = "default";
-export const CHANNEL_DIRECTORIES = ["ios", "ai"] as const;
+export const CHANNEL_DIRECTORIES = ["ios", "ai", "iOS-review"] as const;
 export type Category = string;
 
 export type PostFrontmatter = {
