@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeSlug from "rehype-slug";
-import remarkGfm from "remark-gfm";
+import { BlogMarkdown } from "@/components/blog-markdown";
 import { getLocaleFromCookie, uiText } from "@/lib/i18n";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 
@@ -59,12 +56,7 @@ export default async function BlogPostPage({ params }: PostPageProps) {
       </p>
 
       <article className="markdown-body mt-8">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeSlug, [rehypeAutolinkHeadings, { behavior: "wrap" }]]}
-        >
-          {post.content}
-        </ReactMarkdown>
+        <BlogMarkdown content={post.content} />
       </article>
     </main>
   );
