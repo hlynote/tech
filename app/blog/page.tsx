@@ -4,7 +4,7 @@ import { getAllPosts } from "@/lib/posts";
 
 export const metadata = {
   title: "Blog",
-  description: "Tech Note blog posts",
+  description: "迷途小书童 blog posts",
 };
 
 function getCategoryLabel(category: string) {
