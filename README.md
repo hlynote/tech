@@ -1,4 +1,4 @@
-# Tech Note
+# 迷途小书童
 
 Markdown-first technical blog built with Next.js (App Router).
 

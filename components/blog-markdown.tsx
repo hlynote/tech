@@ -4,6 +4,8 @@ import { Children, isValidElement, type ReactElement, type ReactNode } from "rea
 import ReactMarkdown from "react-markdown";
 import type { Components } from "react-markdown";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { MermaidDiagram } from "@/components/mermaid-diagram";
@@ -44,11 +46,25 @@ type BlogMarkdownProps = {
   content: string;
 };
 
+const sanitizeSchema = {
+  ...defaultSchema,
+  attributes: {
+    ...defaultSchema.attributes,
+    span: [...(defaultSchema.attributes?.span ?? []), ["style"]],
+  },
+  tagNames: [...(defaultSchema.tagNames ?? []), "span"],
+};
+
 export function BlogMarkdown({ content }: BlogMarkdownProps) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeSlug, [rehypeAutolinkHeadings, { behavior: "wrap" }]]}
+      rehypePlugins={[
+        rehypeRaw,
+        [rehypeSanitize, sanitizeSchema],
+        rehypeSlug,
+        [rehypeAutolinkHeadings, { behavior: "wrap" }],
+      ]}
       components={components}
     >
       {content}
