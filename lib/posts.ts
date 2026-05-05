@@ -3,7 +3,6 @@ import path from "node:path";
 import matter from "gray-matter";
 
 export const DEFAULT_CATEGORY = "default";
-export const CHANNEL_DIRECTORIES = ["ios", "ai", "iOS-review", "iOS-interview"] as const;
 export type Category = string;
 
 export type PostFrontmatter = {
@@ -140,6 +139,17 @@ async function readLegacyPostsDir(): Promise<ParsedPost[]> {
   }
 }
 
+async function getContentCategoryDirectories(): Promise<string[]> {
+  try {
+    const entries = await fs.readdir(CONTENT_DIR, { withFileTypes: true });
+    return entries
+      .filter((entry) => entry.isDirectory() && entry.name !== "posts")
+      .map((entry) => entry.name);
+  } catch {
+    return [];
+  }
+}
+
 function detectDuplicateSlugs(posts: ParsedPost[]) {
   const slugToPath = new Map<string, string>();
   for (const post of posts) {
@@ -154,8 +164,9 @@ function detectDuplicateSlugs(posts: ParsedPost[]) {
 }
 
 async function readAllParsedPosts(): Promise<ParsedPost[]> {
+  const categoryDirectories = await getContentCategoryDirectories();
   const categoryPosts = await Promise.all(
-    CHANNEL_DIRECTORIES.map((category) => readCategoryDir(category)),
+    categoryDirectories.map((category) => readCategoryDir(category)),
   );
   const legacyPosts = await readLegacyPostsDir();
   const posts = [...categoryPosts.flat(), ...legacyPosts];
