@@ -1,6 +1,6 @@
 ---
 title: '`public typealias ObservableObject = ObservableObject` 说明'
-date: "2026-05-06T12:00:00+08:00"
+date: "2026-05-12T22:29:49+08:00"
 summary: "摘自 LifeManga 仓库 docs/ObservableObject.md，按 tech-note 博客格式收录。"
 category: "iOS"
 slug: "combine-observable-object-typealias"
